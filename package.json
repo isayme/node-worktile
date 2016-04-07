@@ -1,0 +1,26 @@
+{
+  "name": "worktile",
+  "version": "0.0.1",
+  "description": "Node.js SDK for worktile APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isayme/node-worktile.git"
+  },
+  "keywords": [
+    "worktile"
+  ],
+  "author": "iSayem <isaymeorg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isayme/node-worktile/issues"
+  },
+  "homepage": "https://github.com/isayme/node-worktile",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
