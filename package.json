@@ -4,7 +4,8 @@
   "description": "Node.js SDK for worktile APIs",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,11 @@
   "homepage": "https://github.com/isayme/node-worktile",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "standard": "^6.0.8"
+  },
+  "dependencies": {
+    "debug": "^2.2.0",
+    "request": "^2.70.0"
   }
 }
