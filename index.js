@@ -64,7 +64,8 @@ function defineProperty (obj, key, module) {
 }
 
 var services = {
-  'users': 'user'
+  'users': 'user',
+  'teams': 'team'
 }
 
 for (var key in services) {
