@@ -25,8 +25,8 @@ function Worktile (options) {
       access_token: this.access_token
     }
   }
-  var _request = request.defaults(this._defaults)
 
+  var _request = request.defaults(this._defaults)
   this.request = function (options, callback) {
     if (callback) {
       return _request(options, callback)
@@ -50,10 +50,6 @@ function Worktile (options) {
   }
 }
 
-var services = {
-  'users': 'user'
-}
-
 function defineProperty (obj, key, module) {
   Object.defineProperty(obj, key, {
     enumerable: true,
@@ -66,6 +62,11 @@ function defineProperty (obj, key, module) {
     }
   })
 }
+
+var services = {
+  'users': 'user'
+}
+
 for (var key in services) {
   debug('loading service:', key)
   defineProperty(Worktile.prototype, key, './lib/' + services[key])
