@@ -7,7 +7,7 @@ var fields = ['uid', 'name', 'display_name', 'email']
 
 describe('users', function () {
   describe('profile', function () {
-    it('shuold return ok with callback', function (done) {
+    it('should return ok with callback', function (done) {
       client.users.profile(function (err, res, body) {
         expect(err).to.be.null
         expect(res.statusCode).to.be.equal(200)
@@ -16,7 +16,7 @@ describe('users', function () {
       })
     })
 
-    it('shuold return ok with promise', function (done) {
+    it('should return ok with promise', function (done) {
       client.users.profile().then(function (body) {
         expect(body).contain.keys(fields)
         done()
