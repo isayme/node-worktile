@@ -7,9 +7,9 @@ describe('projects', function () {
   var projects = null
   var uid = '12c55ed2d8994db5946b999c35c2df20'
 
-  describe('getAll', function () {
+  describe('list', function () {
     it('should return ok', function (done) {
-      client.projects.getAll(function (err, res, body) {
+      client.projects.list(function (err, res, body) {
         expect(err).to.be.null
         expect(res.statusCode).to.be.equal(200)
         expect(res.body).to.be.an('array')
@@ -21,9 +21,9 @@ describe('projects', function () {
     })
   })
 
-  describe('getById', function () {
+  describe('get', function () {
     it('should return ok', function (done) {
-      client.projects.getById(projects[0].pid, function (err, res, body) {
+      client.projects.get(projects[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).contain.keys(['pid'])
         done()
@@ -31,9 +31,9 @@ describe('projects', function () {
     })
   })
 
-  describe('getMembersById', function () {
+  describe('getMembers', function () {
     it('should return ok', function (done) {
-      client.projects.getMembersById(projects[0].pid, function (err, res, body) {
+      client.projects.getMembers(projects[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).to.be.an('array')
         expect(res.body).have.length.above(0)
@@ -46,7 +46,11 @@ describe('projects', function () {
   describe('addMemeber', function () {
     it('should return ok', function (done) {
       var role = 2
-      client.projects.addMemeber(projects[0].pid, uid, role, function (err, res, body) {
+      client.projects.addMemeber({
+        pid: projects[0].pid,
+        uid: uid,
+        role: role
+      }, function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).contain.keys(['uid', 'role'])
         expect(res.body.role).to.be.equal(role)
@@ -57,7 +61,10 @@ describe('projects', function () {
 
   describe('removeMemeber', function () {
     it('should return ok', function (done) {
-      client.projects.removeMemeber(projects[0].pid, uid, function (err, res, body) {
+      client.projects.removeMemeber({
+        pid: projects[0].pid,
+        uid: uid
+      }, function (err, res, body) {
         expect(err).to.be.null
         expect(body.result).to.be.true
         done()

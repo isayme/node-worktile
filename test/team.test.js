@@ -6,9 +6,9 @@ var client = require('./client')
 describe('teams', function () {
   var teams = null
 
-  describe('getAll', function () {
+  describe('list', function () {
     it('should return ok', function (done) {
-      client.teams.getAll(function (err, res, body) {
+      client.teams.list(function (err, res, body) {
         expect(err).to.be.null
         expect(res.statusCode).to.be.equal(200)
         expect(res.body).to.be.an('array')
@@ -20,9 +20,9 @@ describe('teams', function () {
     })
   })
 
-  describe('getById', function () {
+  describe('get', function () {
     it('should return ok', function (done) {
-      client.teams.getById(teams[0].team_id, function (err, res, body) {
+      client.teams.get(teams[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).contain.keys(['team_id'])
         done()
@@ -30,9 +30,9 @@ describe('teams', function () {
     })
   })
 
-  describe('getMembersById', function () {
+  describe('getMembers', function () {
     it('should return ok', function (done) {
-      client.teams.getMembersById(teams[0].team_id, function (err, res, body) {
+      client.teams.getMembers(teams[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).to.be.an('array')
         expect(res.body).have.length.above(0)
@@ -42,9 +42,9 @@ describe('teams', function () {
     })
   })
 
-  describe('getProjectsById', function () {
+  describe('getProjects', function () {
     it('should return ok', function (done) {
-      client.teams.getProjectsById(teams[0].team_id, function (err, res, body) {
+      client.teams.getProjects(teams[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).to.be.an('array')
         expect(res.body).have.length.above(0)

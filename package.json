@@ -4,7 +4,7 @@
   "description": "Node.js SDK for worktile APIs",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha -t 10000",
     "lint": "standard"
   },
   "repository": {

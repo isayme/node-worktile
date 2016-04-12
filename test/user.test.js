@@ -36,7 +36,7 @@ describe('users', function () {
     })
 
     it('should return 100006 when teams.getAll', function (done) {
-      c.teams.getAll().catch(function (err) {
+      c.teams.list().catch(function (err) {
         expect(err.code).to.be.equal(100006)
         done()
       })
