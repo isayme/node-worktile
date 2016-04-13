@@ -5,7 +5,7 @@ var client = require('./client')
 
 describe('entries', function () {
   var project = null
-  var entryName = 'testEntry'
+  var entryName = 'testEntry' + Date.now()
   var entry_id = null
 
   before(function (done) {
@@ -17,7 +17,7 @@ describe('entries', function () {
   })
 
   describe('list', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.entries.get(project, function (err, res, body) {
         expect(err).to.be.null
         expect(res.statusCode).to.be.equal(200)
@@ -30,7 +30,7 @@ describe('entries', function () {
   })
 
   describe('create', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.entries.create({
         pid: project.pid,
         name: entryName
@@ -45,13 +45,13 @@ describe('entries', function () {
 
   describe('rename', function () {
     var newName = 'newEntryName'
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.entries.rename({
         entry_id: entry_id,
         name: newName,
         pid: project.pid
       }).then(function (body) {
-        expect(body.success).to.be.equal(true)
+        expect(body.success).to.be.true
         return client.entries.get({
           pid: project.pid
         })
@@ -68,7 +68,7 @@ describe('entries', function () {
   })
 
   describe('watch', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.entries.watch({
         entry_id: entry_id,
         pid: project.pid
@@ -90,7 +90,7 @@ describe('entries', function () {
   })
 
   describe('unwatch', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.entries.unwatch({
         entry_id: entry_id,
         pid: project.pid
@@ -110,7 +110,7 @@ describe('entries', function () {
   })
 
   describe('remove', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.entries.remove({
         entry_id: entry_id,
         pid: project.pid

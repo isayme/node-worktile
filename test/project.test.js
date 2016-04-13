@@ -8,7 +8,7 @@ describe('projects', function () {
   var uid = '12c55ed2d8994db5946b999c35c2df20'
 
   describe('list', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.projects.list(function (err, res, body) {
         expect(err).to.be.null
         expect(res.statusCode).to.be.equal(200)
@@ -22,7 +22,7 @@ describe('projects', function () {
   })
 
   describe('get', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.projects.get(projects[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).contain.keys(['pid'])
@@ -32,7 +32,7 @@ describe('projects', function () {
   })
 
   describe('getMembers', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.projects.getMembers(projects[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).to.be.an('array')
@@ -44,7 +44,7 @@ describe('projects', function () {
   })
 
   describe('addMemeber', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       var role = 2
       client.projects.addMemeber({
         pid: projects[0].pid,
@@ -60,7 +60,7 @@ describe('projects', function () {
   })
 
   describe('removeMemeber', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.projects.removeMemeber({
         pid: projects[0].pid,
         uid: uid

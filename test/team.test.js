@@ -7,7 +7,7 @@ describe('teams', function () {
   var teams = null
 
   describe('list', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.teams.list(function (err, res, body) {
         expect(err).to.be.null
         expect(res.statusCode).to.be.equal(200)
@@ -21,7 +21,7 @@ describe('teams', function () {
   })
 
   describe('get', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.teams.get(teams[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).contain.keys(['team_id'])
@@ -31,7 +31,7 @@ describe('teams', function () {
   })
 
   describe('getMembers', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.teams.getMembers(teams[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).to.be.an('array')
@@ -43,7 +43,7 @@ describe('teams', function () {
   })
 
   describe('getProjects', function () {
-    it('should return ok', function (done) {
+    it('should ok', function (done) {
       client.teams.getProjects(teams[0], function (err, res, body) {
         expect(err).to.be.null
         expect(res.body).to.be.an('array')
