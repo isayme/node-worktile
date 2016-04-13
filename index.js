@@ -67,7 +67,8 @@ var services = {
   'users': 'user',
   'teams': 'team',
   'projects': 'project',
-  'entries': 'entry'
+  'entries': 'entry',
+  'tasks': 'task'
 }
 
 for (var key in services) {
