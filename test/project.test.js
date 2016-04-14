@@ -66,7 +66,7 @@ describe('projects', function () {
         uid: uid
       }, function (err, res, body) {
         expect(err).to.be.null
-        expect(body.result).to.be.true
+        expect(body.success).to.be.true
         done()
       })
     })
