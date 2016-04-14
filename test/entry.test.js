@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, it, before */
 
 var expect = require('chai').expect
 var client = require('./client')
@@ -9,7 +9,7 @@ describe('entries', function () {
   var entry_id = null
 
   before(function (done) {
-    client.projects.list().then(function(projects) {
+    client.projects.list().then(function (projects) {
       expect(projects.length).to.be.above(0)
       project = projects[0]
       done()

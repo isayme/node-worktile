@@ -30,6 +30,7 @@ describe('users', function () {
 
     it('should return 100006 when users.profile', function (done) {
       c.users.profile(function (err, res, body) {
+        expect(err).to.be.null
         expect(body.error_code).to.be.equal(100006)
         done()
       })

@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, it, before, after */
 
 var moment = require('moment')
 var expect = require('chai').expect
