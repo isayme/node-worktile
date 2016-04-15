@@ -83,8 +83,6 @@ describe('entries', function () {
           }
         })
         done()
-      }).catch(function () {
-        console.log(arguments)
       })
     })
   })

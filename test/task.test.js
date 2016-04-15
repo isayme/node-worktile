@@ -4,7 +4,7 @@ var moment = require('moment')
 var expect = require('chai').expect
 var client = require('./client')
 
-describe.only('tasks', function () {
+describe('tasks', function () {
   var project = null
   var entry = null
   var task = null
@@ -24,8 +24,6 @@ describe.only('tasks', function () {
       entry = body
       expect(entry).to.not.be.undefined
       done()
-    }).catch(function (err) {
-      console.error(err)
     })
   })
 
@@ -35,8 +33,6 @@ describe.only('tasks', function () {
       pid: project.pid
     }).then(function () {
       done()
-    }).catch(function (err) {
-      console.error(err)
     })
   })
 
@@ -54,8 +50,6 @@ describe.only('tasks', function () {
         expect(task.name).to.be.equal(taskName)
         expect(task.desc).to.be.equal(taskDesc)
         done()
-      }).catch(function (err) {
-        console.error(err)
       })
     })
   })
@@ -140,8 +134,6 @@ describe.only('tasks', function () {
       }).then(function (body) {
         expect(body.success).to.be.true
         done()
-      }).catch(function (err) {
-        console.error(err)
       })
     })
   })
@@ -197,8 +189,6 @@ describe.only('tasks', function () {
       }).then(function (body) {
         expect(body.members.length).to.be.equal(0)
         done()
-      }).catch(function (err) {
-        console.error(err)
       })
     })
   })
@@ -239,8 +229,6 @@ describe.only('tasks', function () {
         expect(body.watchers.length).to.be.equal(1)
         expect(body.watchers[0].uid).to.be.equal(uid)
         done()
-      }).catch(function (err) {
-        console.error(err)
       })
     })
   })
@@ -268,8 +256,6 @@ describe.only('tasks', function () {
         expect(tasks.length).to.be.equal(1)
         expect(tasks[0].tid).to.be.equal(task.tid)
         done()
-      }).catch(function (err) {
-        console.error(err)
       })
     })
   })
@@ -314,8 +300,6 @@ describe.only('tasks', function () {
       }).then(function (comments) {
         expect(comments.length).to.be.equal(1)
         done()
-      }).catch(function (err) {
-        console.error(err)
       })
     })
   })

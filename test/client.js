@@ -8,4 +8,8 @@ var client = new Client({
   baseUrl: baseUrl
 })
 
+process.on('unhandledRejection', function (reason, promise) {
+  console.log('promise rejected:', reason, promise)
+})
+
 module.exports = client
