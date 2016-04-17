@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -t 10000",
-    "lint": "standard"
+    "lint": "standard",
+    "doc": "node_modules/.bin/jsdoc --configure .jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/isayme/node-worktile",
   "devDependencies": {
     "chai": "^3.5.0",
+    "docdash": "^0.1.0",
     "mocha": "^2.4.5",
     "moment": "^2.12.0",
     "standard": "^6.0.8"

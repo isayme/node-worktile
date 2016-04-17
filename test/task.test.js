@@ -157,8 +157,8 @@ describe('tasks', function () {
     })
   })
 
-  describe('addMember & removeMember', function () {
-    it('should ok', function (done) {
+  describe('members', function () {
+    it('addMember should ok', function (done) {
       client.users.profile().then(function (profile) {
         uid = profile.uid
         return client.tasks.addMember({
@@ -175,11 +175,15 @@ describe('tasks', function () {
       }).then(function (body) {
         expect(body.members.length).to.be.equal(1)
         expect(body.members[0].uid).to.be.equal(uid)
-        return client.tasks.removeMember({
-          tid: task.tid,
-          uid: uid,
-          pid: project.pid
-        })
+        done()
+      })
+    })
+
+    it('removeMember should ok', function (done) {
+      client.tasks.removeMember({
+        tid: task.tid,
+        uid: uid,
+        pid: project.pid
       }).then(function (body) {
         expect(body.success).to.be.true
         return client.tasks.get({
@@ -194,7 +198,7 @@ describe('tasks', function () {
   })
 
   describe('watch & unwatch', function () {
-    it('should ok', function (done) {
+    it('unwatch should ok', function (done) {
       client.tasks.get({
         tid: task.tid,
         pid: project.pid
@@ -214,11 +218,15 @@ describe('tasks', function () {
         })
       }).then(function (body) {
         expect(body.watchers.length).to.be.equal(0)
-        return client.tasks.watch({
-          tid: task.tid,
-          pid: project.pid,
-          uids: [uid]
-        })
+        done()
+      })
+    })
+
+    it('watch should ok', function (done) {
+      client.tasks.watch({
+        tid: task.tid,
+        pid: project.pid,
+        uids: [uid]
       }).then(function (body) {
         expect(body.success).to.be.true
         return client.tasks.get({
@@ -234,7 +242,7 @@ describe('tasks', function () {
   })
 
   describe('expire & today', function () {
-    it('should ok', function (done) {
+    it('expire should ok', function (done) {
       client.tasks.addMember({
         tid: task.tid,
         uid: uid,
@@ -251,8 +259,12 @@ describe('tasks', function () {
         })
       }).then(function (body) {
         expect(body.success).to.be.true
-        return client.tasks.today()
-      }).then(function (tasks) {
+        done()
+      })
+    })
+
+    it('today should ok', function (done) {
+      client.tasks.today().then(function (tasks) {
         expect(tasks.length).to.be.equal(1)
         expect(tasks[0].tid).to.be.equal(task.tid)
         done()
@@ -260,11 +272,11 @@ describe('tasks', function () {
     })
   })
 
-  describe('add/remove/list comments', function () {
-    it('should ok', function (done) {
-      var message = 'commentMessage' + Date.now()
-      var cid = null
+  describe('comments', function () {
+    var message = 'commentMessage' + Date.now()
+    var cid = null
 
+    it('add comment should ok', function (done) {
       client.tasks.listComments({
         tid: task.tid,
         pid: project.pid
@@ -279,19 +291,26 @@ describe('tasks', function () {
       }).then(function (body) {
         expect(body.message).to.be.equal(message)
         cid = body.cid
-        return client.tasks.listComments({
-          tid: task.tid,
-          pid: project.pid
-        })
+        done()
+      })
+    })
+
+    it('list comments should ok', function (done) {
+      client.tasks.listComments({
+        tid: task.tid,
+        pid: project.pid
       }).then(function (comments) {
         expect(comments.length).to.be.equal(2)
-        return client.tasks.removeComment({
-          tid: task.tid,
-          pid: project.pid,
-          cid: cid
-        })
+        done()
       })
-      .then(function (body) {
+    })
+
+    it('remove comment should ok', function (done) {
+      client.tasks.removeComment({
+        tid: task.tid,
+        pid: project.pid,
+        cid: cid
+      }).then(function (body) {
         expect(body.success).to.be.true
         return client.tasks.listComments({
           tid: task.tid,
@@ -299,6 +318,228 @@ describe('tasks', function () {
         })
       }).then(function (comments) {
         expect(comments.length).to.be.equal(1)
+        done()
+      })
+    })
+  })
+
+  describe('labels', function () {
+    it('add label should ok', function (done) {
+      client.tasks.addLabel({
+        tid: task.tid,
+        pid: project.pid,
+        label: 'red'
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.labels.length).to.be.equal(1)
+        expect(body.labels[0].name).to.be.equal('red')
+        done()
+      })
+    })
+
+    it('remove label should ok', function (done) {
+      client.tasks.removeLabel({
+        tid: task.tid,
+        pid: project.pid,
+        label: 'red'
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.labels.length).to.be.equal(0)
+        done()
+      })
+    })
+  })
+
+  describe('complete & uncomplete', function () {
+    it('complete should ok', function (done) {
+      client.tasks.complete({
+        tid: task.tid,
+        pid: project.pid,
+        label: 'red'
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.completed).to.be.equal(1)
+        done()
+      })
+    })
+
+    it('uncomplete should ok', function (done) {
+      client.tasks.uncomplete({
+        tid: task.tid,
+        pid: project.pid,
+        label: 'red'
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.completed).to.be.equal(0)
+        done()
+      })
+    })
+  })
+
+  describe('todos', function () {
+    var todoName = 'todoName' + Date.now()
+    var todo_id = null
+
+    it('add todo should ok', function (done) {
+      client.tasks.addTodo({
+        tid: task.tid,
+        pid: project.pid,
+        name: todoName
+      }).then(function (body) {
+        expect(body.name).to.be.equal(todoName)
+        todo_id = body.todo_id
+        done()
+      })
+    })
+
+    it('update todo should ok', function (done) {
+      client.tasks.updateTodo({
+        tid: task.tid,
+        pid: project.pid,
+        todo_id: todo_id,
+        name: 'todoName'
+      }).then(function (body) {
+        expect(body.name).to.be.equal('todoName')
+        done()
+      })
+    })
+
+    it('complete todo should ok', function (done) {
+      client.tasks.completeTodo({
+        tid: task.tid,
+        pid: project.pid,
+        todo_id: todo_id
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.todos.length).to.be.equal(1)
+        expect(body.todos[0].checked).to.be.equal(1)
+        done()
+      })
+    })
+
+    it('uncomplete todo should ok', function (done) {
+      client.tasks.uncompleteTodo({
+        tid: task.tid,
+        pid: project.pid,
+        todo_id: todo_id
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.todos.length).to.be.equal(1)
+        expect(body.todos[0].checked).to.be.equal(0)
+        done()
+      })
+    })
+
+    it('remove todo should ok', function (done) {
+      client.tasks.removeTodo({
+        tid: task.tid,
+        pid: project.pid,
+        todo_id: todo_id
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.todos.length).to.be.equal(0)
+        done()
+      })
+    })
+  })
+
+  describe('archives', function () {
+    it('archive should ok', function (done) {
+      client.tasks.archive({
+        tid: task.tid,
+        pid: project.pid
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.archived).to.be.equal(1)
+        done()
+      })
+    })
+
+    it('list archive should ok', function (done) {
+      client.tasks.listArchived({
+        pid: project.pid
+      }).then(function (body) {
+        expect(body).to.be.an('array')
+        done()
+      })
+    })
+
+    it('unarchive should ok', function (done) {
+      client.tasks.unarchive({
+        tid: task.tid,
+        pid: project.pid,
+        entry_id: entry.entry_id
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.archived).to.be.equal(0)
+        done()
+      })
+    })
+
+    it('archiveComplete should ok', function (done) {
+      client.tasks.complete({
+        tid: task.tid,
+        pid: project.pid
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.archive({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.success).to.be.true
+        return client.tasks.get({
+          tid: task.tid,
+          pid: project.pid
+        })
+      }).then(function (body) {
+        expect(body.archived).to.be.equal(1)
+        expect(body.completed).to.be.equal(1)
         done()
       })
     })

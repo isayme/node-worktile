@@ -3,6 +3,19 @@
 var request = require('request')
 var debug = require('debug')('worktile')
 
+/**
+ * 回调函数, 处理API返回信息
+ * @callback requestCallback
+ * @param {error} err - 错误信息
+ * @param {object} response - 响应对象
+ * @param {object} body - API返回数据
+ */
+
+/**
+ * Worktile client构造函数
+ * @constructor
+ * @param {string|object} options - access_token字符串或包含access_token属性的对象
+ */
 function Worktile (options) {
   if (typeof options === 'string') {
     options = {
