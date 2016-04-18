@@ -79,7 +79,7 @@ describe('entries', function () {
         expect(body).to.be.an('array')
         body.forEach(function (entry) {
           if (entry.entry_id === entry_id) {
-            expect(entry.watched).to.be.equal(true)
+            expect(entry.watched).to.be.true
           }
         })
         done()
