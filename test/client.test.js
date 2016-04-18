@@ -23,6 +23,13 @@ describe('Worktile constructor', function () {
     expect(createWorktile).to.throw(Error)
   })
 
+  it('should throw if access_token missed', function () {
+    function createWorktile () {
+      return new Worktile({})
+    }
+    expect(createWorktile).to.throw(Error)
+  })
+
   it('baseUrl default to https://api.teambition.com', function () {
     var c = new Worktile('access_token')
     expect(c._defaults.baseUrl).to.be.equal('https://api.worktile.com')

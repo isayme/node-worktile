@@ -23,6 +23,7 @@ function Worktile (options) {
     }
   }
 
+  options = options || {}
   this.access_token = options.access_token
   if (!this.access_token) {
     throw new Error('access_token required!')
