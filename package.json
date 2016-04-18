@@ -4,7 +4,7 @@
   "description": "Node.js SDK for worktile APIs",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -t 10000",
+    "test": "mocha -t 60000",
     "lint": "standard",
     "doc": "node_modules/.bin/jsdoc --configure .jsdoc.json",
     "cov": "istanbul cover _mocha --report lcovonly -- -R spec test/*.js -t 600000 && cat ./coverage/lcov.info | coveralls"
