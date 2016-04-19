@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Worktile.html">Worktile</a></li></ul><h3>Namespaces</h3><ul><li><a href="Worktile_entries.html">entries</a><ul class='methods'><li data-type='method'><a href="Worktile_entries.html#.create">create</a></li><li data-type='method'><a href="Worktile_entries.html#.get">get</a></li><li data-type='method'><a href="Worktile_entries.html#.remove">remove</a></li><li data-type='method'><a href="Worktile_entries.html#.rename">rename</a></li><li data-type='method'><a href="Worktile_entries.html#.unwatch">unwatch</a></li><li data-type='method'><a href="Worktile_entries.html#.watch">watch</a></li></ul></li><li><a href="Worktile_posts.html">posts</a><ul class='methods'><li data-type='method'><a href="Worktile_posts.html#.addComment">addComment</a></li><li data-type='method'><a href="Worktile_posts.html#.create">create</a></li><li data-type='method'><a href="Worktile_posts.html#.get">get</a></li><li data-type='method'><a href="Worktile_posts.html#.list">list</a></li><li data-type='method'><a href="Worktile_posts.html#.listComments">listComments</a></li><li data-type='method'><a href="Worktile_posts.html#.remove">remove</a></li><li data-type='method'><a href="Worktile_posts.html#.removeComment">removeComment</a></li><li data-type='method'><a href="Worktile_posts.html#.unwatch">unwatch</a></li><li data-type='method'><a href="Worktile_posts.html#.update">update</a></li><li data-type='method'><a href="Worktile_posts.html#.watch">watch</a></li></ul></li><li><a href="Worktile_projects.html">projects</a><ul class='methods'><li data-type='method'><a href="Worktile_projects.html#.addMemeber">addMemeber</a></li><li data-type='method'><a href="Worktile_projects.html#.get">get</a></li><li data-type='method'><a href="Worktile_projects.html#.getMembers">getMembers</a></li><li data-type='method'><a href="Worktile_projects.html#.list">list</a></li><li data-type='method'><a href="Worktile_projects.html#.removeMemeber">removeMemeber</a></li></ul></li><li><a href="Worktile_teams.html">teams</a><ul class='methods'><li data-type='method'><a href="Worktile_teams.html#.get">get</a></li><li data-type='method'><a href="Worktile_teams.html#.getMembers">getMembers</a></li><li data-type='method'><a href="Worktile_teams.html#.getProjects">getProjects</a></li><li data-type='method'><a href="Worktile_teams.html#.list">list</a></li></ul></li><li><a href="Worktile_users.html">users</a><ul class='methods'><li data-type='method'><a href="Worktile_users.html#.profile">profile</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict'
+
+var request = require('request')
+var debug = require('debug')('worktile')
+
+/**
+ * 回调函数, 处理API返回信息
+ * @callback requestCallback
+ * @param {error} err - 错误信息
+ * @param {object} response - 响应对象
+ * @param {object} body - API返回数据
+ */
+
+/**
+ * Worktile client构造函数
+ * @constructor
+ * @param {string|object} options - access_token字符串或包含access_token属性的对象
+ */
+function Worktile (options) {
+  if (typeof options === 'string') {
+    options = {
+      access_token: options
+    }
+  }
+
+  options = options || {}
+  this.access_token = options.access_token
+  if (!this.access_token) {
+    throw new Error('access_token required!')
+  }
+
+  this.options = options
+
+  this._defaults = {
+    baseUrl: options.baseUrl || 'https://api.worktile.com',
+    gzip: true,
+    json: true,
+    headers: {
+      access_token: this.access_token
+    }
+  }
+
+  var _request = request.defaults(this._defaults)
+  this.request = function (options, callback) {
+    if (callback) {
+      return _request(options, callback)
+    } else if (Promise) {
+      return new Promise(function (resolve, reject) {
+        _request(options, function (err, res, body) {
+          if (err) {
+            reject(err)
+          } else if (res.statusCode &lt; 200 || res.statusCode >= 300) {
+            err = new Error(body.error_message)
+            err.code = body.error_code
+            reject(err)
+          } else {
+            resolve(body)
+          }
+        })
+      })
+    } else {
+      throw new Error('callback or promise feature required')
+    }
+  }
+}
+
+function defineProperty (obj, key, module) {
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: false,
+    get: function () {
+      var obj = require(module)
+      obj.request = this.request
+      obj._parent = this
+      return obj
+    }
+  })
+}
+
+var services = {
+  'users': 'user',
+  'teams': 'team',
+  'projects': 'project',
+  'entries': 'entry',
+  'tasks': 'task',
+  'posts': 'post'
+}
+
+for (var key in services) {
+  debug('loading service:', key)
+  defineProperty(Worktile.prototype, key, './lib/' + services[key])
+}
+
+module.exports = Worktile
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Apr 20 2016 07:49:26 GMT+0800 (CST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
