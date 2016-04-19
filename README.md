@@ -8,3 +8,9 @@
 [![NPM](https://nodei.co/npm/worktile.png)](https://nodei.co/npm/worktile/)
 
 Node.js SDK for worktile
+
+# APIs
+[Document](http://isayme.github.io/node-worktile/)
+
+# Test
+> npm run mocha
