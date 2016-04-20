@@ -7,8 +7,9 @@
     "test": "npm run lint && npm run coverage",
     "mocha": "mocha -t 60000",
     "lint": "standard",
-    "doc": "node_modules/.bin/jsdoc --configure .jsdoc.json",
-    "coverage": "istanbul cover _mocha --report lcovonly -- -R spec test/*.js -t 60000 && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "doc": "jsdoc --configure .jsdoc.json",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "coverage": "istanbul cover _mocha --report lcovonly -- -R spec test/*.js -t 60000 && npm run coveralls"
   },
   "repository": {
     "type": "git",
