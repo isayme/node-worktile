@@ -8,12 +8,10 @@ describe('teams', function () {
 
   describe('list', function () {
     it('should ok', function (done) {
-      client.teams.list(function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.statusCode).to.be.equal(200)
-        expect(res.body).to.be.an('array')
-        expect(res.body).have.length.above(0)
-        expect(res.body[0]).contain.keys(['team_id'])
+      client.teams.list().then(function (body) {
+        expect(body).to.be.an('array')
+        expect(body).have.length.above(0)
+        expect(body[0]).contain.keys(['team_id'])
         teams = body
         done()
       })
@@ -22,9 +20,8 @@ describe('teams', function () {
 
   describe('get', function () {
     it('should ok', function (done) {
-      client.teams.get(teams[0], function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body).contain.keys(['team_id'])
+      client.teams.get(teams[0]).then(function (body) {
+        expect(body).contain.keys(['team_id'])
         done()
       })
     })
@@ -32,11 +29,10 @@ describe('teams', function () {
 
   describe('getMembers', function () {
     it('should ok', function (done) {
-      client.teams.getMembers(teams[0], function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body).to.be.an('array')
-        expect(res.body).have.length.above(0)
-        expect(res.body[0]).contain.keys(['uid'])
+      client.teams.getMembers(teams[0]).then(function (body) {
+        expect(body).to.be.an('array')
+        expect(body).have.length.above(0)
+        expect(body[0]).contain.keys(['uid'])
         done()
       })
     })
@@ -44,11 +40,10 @@ describe('teams', function () {
 
   describe('getProjects', function () {
     it('should ok', function (done) {
-      client.teams.getProjects(teams[0], function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body).to.be.an('array')
-        expect(res.body).have.length.above(0)
-        expect(res.body[0]).contain.keys(['pid'])
+      client.teams.getProjects(teams[0]).then(function (body) {
+        expect(body).to.be.an('array')
+        expect(body).have.length.above(0)
+        expect(body[0]).contain.keys(['pid'])
         done()
       })
     })

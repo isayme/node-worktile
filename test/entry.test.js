@@ -18,12 +18,10 @@ describe('entries', function () {
 
   describe('list', function () {
     it('should ok', function (done) {
-      client.entries.get(project, function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.statusCode).to.be.equal(200)
-        expect(res.body).to.be.an('array')
-        expect(res.body).have.length.above(0)
-        expect(res.body[0]).contain.keys(['entry_id'])
+      client.entries.get(project).then(function (body) {
+        expect(body).to.be.an('array')
+        expect(body).have.length.above(0)
+        expect(body[0]).contain.keys(['entry_id'])
         done()
       })
     })
@@ -34,10 +32,9 @@ describe('entries', function () {
       client.entries.create({
         pid: project.pid,
         name: entryName
-      }, function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body.name).to.be.equal(entryName)
-        entry_id = res.body.entry_id
+      }).then(function (body) {
+        expect(body.name).to.be.equal(entryName)
+        entry_id = body.entry_id
         done()
       })
     })

@@ -1,15 +1,7 @@
 'use strict'
 
-var request = require('request')
+var request = require('request-promise')
 var debug = require('debug')('worktile')
-
-/**
- * 回调函数, 处理API返回信息
- * @callback requestCallback
- * @param {error} err - 错误信息
- * @param {object} response - 响应对象
- * @param {object} body - API返回数据
- */
 
 /**
  * Worktile client构造函数
@@ -40,28 +32,8 @@ function Worktile (options) {
     }
   }
 
-  var _request = request.defaults(this._defaults)
-  this.request = function (options, callback) {
-    if (callback) {
-      return _request(options, callback)
-    } else if (Promise) {
-      return new Promise(function (resolve, reject) {
-        _request(options, function (err, res, body) {
-          if (err) {
-            reject(err)
-          } else if (res.statusCode < 200 || res.statusCode >= 300) {
-            err = new Error(body.error_message)
-            err.code = body.error_code
-            reject(err)
-          } else {
-            resolve(body)
-          }
-        })
-      })
-    } else {
-      throw new Error('callback or promise feature required')
-    }
-  }
+  this.request = request.defaults(this._defaults)
+  return this
 }
 
 function defineProperty (obj, key, module) {

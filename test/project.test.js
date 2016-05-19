@@ -9,12 +9,10 @@ describe('projects', function () {
 
   describe('list', function () {
     it('should ok', function (done) {
-      client.projects.list(function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.statusCode).to.be.equal(200)
-        expect(res.body).to.be.an('array')
-        expect(res.body).have.length.above(0)
-        expect(res.body[0]).contain.keys(['pid'])
+      client.projects.list().then(function (body) {
+        expect(body).to.be.an('array')
+        expect(body).have.length.above(0)
+        expect(body[0]).contain.keys(['pid'])
         projects = body
         done()
       })
@@ -23,9 +21,8 @@ describe('projects', function () {
 
   describe('get', function () {
     it('should ok', function (done) {
-      client.projects.get(projects[0], function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body).contain.keys(['pid'])
+      client.projects.get(projects[0]).then(function (body) {
+        expect(body).contain.keys(['pid'])
         done()
       })
     })
@@ -33,11 +30,10 @@ describe('projects', function () {
 
   describe('getMembers', function () {
     it('should ok', function (done) {
-      client.projects.getMembers(projects[0], function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body).to.be.an('array')
-        expect(res.body).have.length.above(0)
-        expect(res.body[0]).contain.keys(['uid'])
+      client.projects.getMembers(projects[0]).then(function (body) {
+        expect(body).to.be.an('array')
+        expect(body).have.length.above(0)
+        expect(body[0]).contain.keys(['uid'])
         done()
       })
     })
@@ -50,10 +46,9 @@ describe('projects', function () {
         pid: projects[0].pid,
         uid: uid,
         role: role
-      }, function (err, res, body) {
-        expect(err).to.be.null
-        expect(res.body).contain.keys(['uid', 'role'])
-        expect(res.body.role).to.be.equal(role)
+      }).then(function (body) {
+        expect(body).contain.keys(['uid', 'role'])
+        expect(body.role).to.be.equal(role)
         done()
       })
     })
@@ -64,8 +59,7 @@ describe('projects', function () {
       client.projects.removeMemeber({
         pid: projects[0].pid,
         uid: uid
-      }, function (err, res, body) {
-        expect(err).to.be.null
+      }).then(function (body) {
         expect(body.success).to.be.true
         done()
       })
