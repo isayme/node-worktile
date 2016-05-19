@@ -1,6 +1,6 @@
 {
   "name": "worktile",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node.js SDK for worktile APIs",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "request": "^2.70.0",
     "request-promise": "^3.0.0"
   }
 }
